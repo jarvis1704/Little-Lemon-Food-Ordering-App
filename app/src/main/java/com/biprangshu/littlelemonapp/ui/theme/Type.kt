@@ -84,6 +84,5 @@ val Typography = Typography(
         fontSize = 36.sp,
         lineHeight = 44.sp,
     )
-
 )
 
