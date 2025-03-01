@@ -24,13 +24,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.biprangshu.littlelemonapp.R
 import com.biprangshu.littlelemonapp.ui.theme.Karla
 import com.biprangshu.littlelemonapp.ui.theme.LittleLemonGreen
 import com.biprangshu.littlelemonapp.ui.theme.MarkaziText
 
 @Composable
-fun onBoardingScreen(modifier: Modifier = Modifier) {
+fun onBoardingScreen(modifier: Modifier = Modifier, navController: NavController) {
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
@@ -46,7 +47,7 @@ fun onBoardingScreen(modifier: Modifier = Modifier) {
             Text("Welcome", fontFamily = MarkaziText, fontSize = 68.sp, fontWeight = FontWeight.Medium, color = LittleLemonGreen)
             Button(
                 onClick = {
-
+                    navController.navigate("onboardingform")
                 },
                 modifier = Modifier.padding(top = 100.dp).width(250.dp),
                 shape = RoundedCornerShape(16.dp),
@@ -57,10 +58,4 @@ fun onBoardingScreen(modifier: Modifier = Modifier) {
             }
         }
     }
-}
-
-@Preview
-@Composable
-private fun onBoardingPreview() {
-    onBoardingScreen()
 }

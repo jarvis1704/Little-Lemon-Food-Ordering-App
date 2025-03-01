@@ -20,7 +20,6 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextFieldColors
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -33,10 +32,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.biprangshu.littlelemonapp.R
 import com.biprangshu.littlelemonapp.ui.theme.Karla
 import com.biprangshu.littlelemonapp.ui.theme.LittleLemonGreen
@@ -44,7 +42,7 @@ import com.biprangshu.littlelemonapp.ui.theme.LittleLemonYellow
 import com.biprangshu.littlelemonapp.ui.theme.MarkaziText
 
 @Composable
-fun onBoardingForm(modifier: Modifier = Modifier) {
+fun onBoardingForm(modifier: Modifier = Modifier, navController: NavController) {
 
     var firsttext by remember {
         mutableStateOf("")
@@ -120,7 +118,7 @@ fun onBoardingForm(modifier: Modifier = Modifier) {
                         value = lastText,
                         onValueChange = {lastText=it},
                         modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
-                        label = { Text("Enter your first name") },
+                        label = { Text("Enter your Last name") },
                         colors = TextFieldDefaults.colors(
                             focusedTextColor = LittleLemonGreen,
                             unfocusedTextColor = LittleLemonGreen,
@@ -145,7 +143,7 @@ fun onBoardingForm(modifier: Modifier = Modifier) {
                         value = emailText,
                         onValueChange = {emailText=it},
                         modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
-                        label = { Text("Enter your first name") },
+                        label = { Text("Enter your Email") },
                         colors = TextFieldDefaults.colors(
                             focusedTextColor = LittleLemonGreen,
                             unfocusedTextColor = LittleLemonGreen,
@@ -168,7 +166,7 @@ fun onBoardingForm(modifier: Modifier = Modifier) {
             ) {
                 Button(
                     onClick = {
-                        TODO()
+                        navController.navigate("homescreen")
                     },
                     modifier = Modifier.padding(top = 100.dp).width(250.dp),
                     shape = RoundedCornerShape(16.dp),
@@ -183,8 +181,3 @@ fun onBoardingForm(modifier: Modifier = Modifier) {
 }
 
 
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-private fun onBoardingPreview() {
-    onBoardingForm()
-}

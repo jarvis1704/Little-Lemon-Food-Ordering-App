@@ -11,6 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.rememberNavController
 import com.biprangshu.littlelemonapp.onboarding.onBoardingScreen
 import com.biprangshu.littlelemonapp.ui.theme.LittleLemonAppTheme
 
@@ -20,7 +21,8 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             LittleLemonAppTheme {
-                onBoardingScreen()
+                val navController= rememberNavController()
+                AppNav(navController = navController)
             }
         }
     }
