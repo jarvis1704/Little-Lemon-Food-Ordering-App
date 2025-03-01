@@ -45,7 +45,9 @@ fun onBoardingScreen(modifier: Modifier = Modifier) {
             Spacer(Modifier.height(16.dp))
             Text("Welcome", fontFamily = MarkaziText, fontSize = 68.sp, fontWeight = FontWeight.Medium, color = LittleLemonGreen)
             Button(
-                onClick = {},
+                onClick = {
+
+                },
                 modifier = Modifier.padding(top = 100.dp).width(250.dp),
                 shape = RoundedCornerShape(16.dp),
                 elevation = ButtonDefaults.elevatedButtonElevation(defaultElevation = 16.dp, pressedElevation = 0.dp),
