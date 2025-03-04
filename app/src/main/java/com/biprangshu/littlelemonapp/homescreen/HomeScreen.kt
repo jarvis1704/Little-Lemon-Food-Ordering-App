@@ -16,19 +16,32 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.Card
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.biprangshu.littlelemonapp.R
+import kotlin.math.sin
 
 @Composable
 fun homeScreen(modifier: Modifier = Modifier) {
@@ -96,10 +109,61 @@ fun CollapsedHeaderContent() {
 @Composable
 fun ExpandedHeaderContent(navController: NavController, onSearch: (String) -> Unit) {
     Column(
-        modifier = Modifier.fillMaxSize().padding(16.dp)
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp)
     ) {
         Row {
-            Text("Hello User!")
+            Column {
+                Text("Hello User!")
+                Text("Welcome to Little Lemon!")
+            }
+        }
+        SearchBox {  }
+    }
+}
+
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun SearchBox(modifier: Modifier = Modifier, onSearch: (String) -> Unit) {
+    var searchQuery by remember{
+        mutableStateOf("")
+    }
+
+
+    TextField(
+        value = searchQuery,
+        onValueChange = {searchQuery=it},
+        leadingIcon = {
+            Icon(
+                imageVector = Icons.Filled.Search,
+                contentDescription = "Search Icon",
+                tint = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        },
+        placeholder = {
+            Text("Search For Food", color = MaterialTheme.colorScheme.onSurfaceVariant)
+        },
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp),
+        shape = RoundedCornerShape(8.dp),
+        colors= TextFieldDefaults.textFieldColors(
+            focusedIndicatorColor = Color.Transparent,
+            unfocusedIndicatorColor = Color.Transparent,
+            disabledIndicatorColor = Color.Transparent,
+            containerColor = MaterialTheme.colorScheme.onSurface
+        ),
+        singleLine = true
+    )
+}
+
+
+@Composable
+fun ItemCard(modifier: Modifier = Modifier) {
+    Card {
+        Column {
 
         }
     }
