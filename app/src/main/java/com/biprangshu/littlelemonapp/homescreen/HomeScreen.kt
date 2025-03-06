@@ -20,6 +20,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Card
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -37,14 +38,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.biprangshu.littlelemonapp.R
-import kotlin.math.sin
+import com.biprangshu.littlelemonapp.viewmodel.MainViewModel
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.biprangshu.littlelemonapp.data.remote.Menu
 
 @Composable
-fun homeScreen(modifier: Modifier = Modifier) {
+fun homeScreen(modifier: Modifier = Modifier, viewModel: MainViewModel = hiltViewModel()) {
     Surface(
         color = MaterialTheme.colorScheme.background,
         modifier = Modifier.fillMaxSize()
@@ -56,6 +58,17 @@ fun homeScreen(modifier: Modifier = Modifier) {
                 .navigationBarsPadding()
         ) {
 
+            if(viewModel.isLoading){
+                CircularProgressIndicator(modifier = Modifier.padding(16.dp))
+            }
+
+            if (viewModel.errorMessage.isNotEmpty()) {
+                Text(
+                    text = viewModel.errorMessage,
+                    color = MaterialTheme.colorScheme.error,
+                    modifier = Modifier.padding(16.dp)
+                )
+            }
         }
     }
 }
@@ -161,7 +174,7 @@ fun SearchBox(modifier: Modifier = Modifier, onSearch: (String) -> Unit) {
 
 
 @Composable
-fun ItemCard(modifier: Modifier = Modifier) {
+fun ItemCard(menu: Menu) {
     Card {
         Column {
 
