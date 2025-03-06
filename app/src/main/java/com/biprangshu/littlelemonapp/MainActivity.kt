@@ -14,7 +14,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
 import com.biprangshu.littlelemonapp.onboarding.onBoardingScreen
 import com.biprangshu.littlelemonapp.ui.theme.LittleLemonAppTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
