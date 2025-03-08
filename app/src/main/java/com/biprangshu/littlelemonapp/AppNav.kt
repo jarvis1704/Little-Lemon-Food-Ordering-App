@@ -1,5 +1,7 @@
 package com.biprangshu.littlelemonapp
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -10,9 +12,11 @@ import androidx.navigation.compose.composable
 import com.biprangshu.littlelemonapp.homescreen.homeScreen
 import com.biprangshu.littlelemonapp.onboarding.onBoardingForm
 import com.biprangshu.littlelemonapp.onboarding.onBoardingScreen
+import com.biprangshu.littlelemonapp.reservetable.confirmScreen
 import com.biprangshu.littlelemonapp.reservetable.reserveTable
 import com.biprangshu.littlelemonapp.viewmodel.MainViewModel
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun AppNav(modifier: Modifier = Modifier, navController: NavHostController) {
     NavHost(
@@ -36,7 +40,10 @@ fun AppNav(modifier: Modifier = Modifier, navController: NavHostController) {
             homeScreen(navController = navController)
         }
         composable(route = "reservetable"){
-            reserveTable()
+            reserveTable(navController= navController)
+        }
+        composable(route= "confirmscreen"){
+            confirmScreen(navController = navController)
         }
     }
 }
