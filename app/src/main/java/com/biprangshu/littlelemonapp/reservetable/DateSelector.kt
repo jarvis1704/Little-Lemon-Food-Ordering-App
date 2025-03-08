@@ -47,8 +47,12 @@ import java.util.Locale
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun dateYearSelector(
-    dateToBeUpdated: MutableState<LocalDate>,
-    selectedDate: LocalDate) {
+    dateToBeUpdated: LocalDate,
+    onDateChanged: (LocalDate) -> Unit,
+    selectedDate: LocalDate
+) {
+    // Initialize the displayed month using the selectedDate.
+    // (This local state only affects the UI of the calendar grid.)
     var displayedMonth by remember { mutableStateOf(YearMonth.from(selectedDate)) }
 
     Card(
@@ -62,16 +66,14 @@ fun dateYearSelector(
                 .fillMaxWidth()
                 .padding(16.dp)
         ) {
-            // Month and Year Row
+            // Month and Year selectors
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 // Month Selector
-                Row(
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
                     IconButton(onClick = { displayedMonth = displayedMonth.minusMonths(1) }) {
                         Icon(
                             imageVector = Icons.Default.KeyboardArrowLeft,
@@ -92,11 +94,8 @@ fun dateYearSelector(
                         )
                     }
                 }
-
                 // Year Selector
-                Row(
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
                     IconButton(onClick = { displayedMonth = displayedMonth.minusYears(1) }) {
                         Icon(
                             imageVector = Icons.Default.KeyboardArrowLeft,
@@ -121,7 +120,7 @@ fun dateYearSelector(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Week Header
+            // Week header
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceEvenly
@@ -148,9 +147,9 @@ fun dateYearSelector(
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
                 items(42) { index ->
-                    val date = firstDayOfGrid.plusDays(index.toLong())
-                    val isCurrentMonth = date.month == displayedMonth.month
-                    val isSelected = date == dateToBeUpdated.value
+                    val currentDate = firstDayOfGrid.plusDays(index.toLong())
+                    val isCurrentMonth = currentDate.month == displayedMonth.month
+                    val isSelected = currentDate == dateToBeUpdated
 
                     Box(
                         modifier = Modifier
@@ -160,17 +159,16 @@ fun dateYearSelector(
                             .background(
                                 when {
                                     isSelected -> Color(0xFFEB4335)
-                                    isCurrentMonth -> Color.Transparent
                                     else -> Color.Transparent
                                 }
                             )
                             .clickable(enabled = isCurrentMonth) {
-                                dateToBeUpdated.value = date
+                                onDateChanged(currentDate)
                             },
                         contentAlignment = Alignment.Center
                     ) {
                         Text(
-                            text = date.dayOfMonth.toString(),
+                            text = currentDate.dayOfMonth.toString(),
                             style = MaterialTheme.typography.bodyMedium,
                             color = when {
                                 isSelected -> Color.White
@@ -183,5 +181,8 @@ fun dateYearSelector(
             }
         }
     }
-    Text(text = "Selected Date: ${dateToBeUpdated.value.dayOfMonth} ${dateToBeUpdated.value.month}, ${dateToBeUpdated.value.year}")
+    Text(
+        text = "Selected Date: ${dateToBeUpdated.dayOfMonth} ${dateToBeUpdated.month}, ${dateToBeUpdated.year}",
+        modifier = Modifier.padding(16.dp)
+    )
 }
