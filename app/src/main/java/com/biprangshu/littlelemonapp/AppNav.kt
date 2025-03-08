@@ -32,7 +32,7 @@ fun AppNav(modifier: Modifier = Modifier, navController: NavHostController) {
         composable(
             route = "homescreen"
         ){
-            homeScreen()
+            homeScreen(navController = navController)
         }
     }
 }

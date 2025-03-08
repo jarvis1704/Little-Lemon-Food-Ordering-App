@@ -20,6 +20,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
@@ -34,6 +35,7 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -54,12 +56,17 @@ import com.biprangshu.littlelemonapp.data.remote.Menu
 import com.biprangshu.littlelemonapp.viewmodel.MainViewModel
 
 @Composable
-fun homeScreen(modifier: Modifier = Modifier, viewModel: MainViewModel = hiltViewModel()) {
+fun homeScreen(modifier: Modifier = Modifier, viewModel: MainViewModel = hiltViewModel(), navController: NavController) {
 
 
     val isLoading by viewModel.isLoading.collectAsState() // Collect isLoading StateFlow
     val errorMessage by viewModel.errorMessage.collectAsState() // Collect errorMessage StateFlow
     val menuItems by viewModel.menuItems.collectAsState()   // Collect menuItems StateFlow
+
+    val listState= rememberLazyListState()
+    val scrolledUp by remember {
+        derivedStateOf { listState.firstVisibleItemIndex<=0 }
+    }
 
 
     Surface(
@@ -75,6 +82,8 @@ fun homeScreen(modifier: Modifier = Modifier, viewModel: MainViewModel = hiltVie
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
+            dynamicHeader(navController = navController, scrolledUp = scrolledUp) { }
+
             if(isLoading){
                 CircularProgressIndicator(modifier = Modifier.padding(16.dp))
             }
@@ -88,7 +97,8 @@ fun homeScreen(modifier: Modifier = Modifier, viewModel: MainViewModel = hiltVie
             }
 
             LazyColumn(
-                modifier= Modifier.fillMaxSize()
+                modifier= Modifier.fillMaxSize(),
+                state = listState
             ) {
                 items(menuItems){
                     menuItem->
