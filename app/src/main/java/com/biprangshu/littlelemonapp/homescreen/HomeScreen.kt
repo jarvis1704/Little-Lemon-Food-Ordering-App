@@ -7,6 +7,7 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -21,6 +22,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -45,11 +47,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -57,6 +61,9 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.biprangshu.littlelemonapp.R
 import com.biprangshu.littlelemonapp.data.remote.Menu
+import com.biprangshu.littlelemonapp.ui.theme.Karla
+import com.biprangshu.littlelemonapp.ui.theme.LittleLemonGreen
+import com.biprangshu.littlelemonapp.util.menuCategory
 import com.biprangshu.littlelemonapp.viewmodel.MainViewModel
 
 @Composable
@@ -70,6 +77,10 @@ fun homeScreen(modifier: Modifier = Modifier, viewModel: MainViewModel = hiltVie
     val listState= rememberLazyListState()
     val scrolledUp by remember {
         derivedStateOf { listState.firstVisibleItemIndex<=0 }
+    }
+
+    var selectedCategory by remember {
+        mutableStateOf("All")
     }
 
 
@@ -100,6 +111,15 @@ fun homeScreen(modifier: Modifier = Modifier, viewModel: MainViewModel = hiltVie
                 )
             }
 
+            Row(
+                modifier= Modifier.fillMaxWidth().padding(vertical = 8.dp)
+            ) {
+                sortButtons(categories = menuCategory, selectedCategory = selectedCategory) {
+                        category->
+                    selectedCategory=category
+                }
+            }
+
             LazyColumn(
                 modifier= Modifier.fillMaxSize(),
                 state = listState
@@ -117,7 +137,7 @@ fun homeScreen(modifier: Modifier = Modifier, viewModel: MainViewModel = hiltVie
 
 @Composable
 fun dynamicHeader(navController: NavController, scrolledUp: Boolean, onSearch: (String)-> Unit) {
-    val headerHeightExpanded=155.dp
+    val headerHeightExpanded=160.dp
     val headerHeightCollapsed=56.dp
 
     val headerHeight by animateDpAsState(
@@ -183,7 +203,9 @@ fun ExpandedHeaderContent(navController: NavController, onSearch: (String) -> Un
                 Text("Welcome to Little Lemon!")
             }
             IconButton({}) {
-                Image(painter = painterResource(R.drawable.reserve_table), contentDescription = "Reserve table", modifier = Modifier.height(100.dp).width(100.dp), colorFilter = iconTint )
+                Image(painter = painterResource(R.drawable.reserve_table), contentDescription = "Reserve table", modifier = Modifier
+                    .height(100.dp)
+                    .width(100.dp), colorFilter = iconTint )
             }
         }
         SearchBox {  }
@@ -260,6 +282,30 @@ fun ItemCard(modifier: Modifier=Modifier, menu: Menu) {
             Text(text = menu.title, style = MaterialTheme.typography.titleMedium)
             Text(text = menu.description, style = MaterialTheme.typography.bodyMedium)
             Text(text = "Price: ${menu.price}", style = MaterialTheme.typography.bodySmall)
+        }
+    }
+}
+
+@Composable
+fun sortButtons(modifier: Modifier = Modifier, categories: List<String>, selectedCategory: String, onCategorySelected: (String)->Unit) {
+    LazyRow {
+        items(categories){
+            category->
+            val isSelected = category == selectedCategory
+            val backgroundColor = if(isSelected) LittleLemonGreen else Color.LightGray
+            val textColor = if(isSelected) Color.White else Color.Black
+
+            Box(
+                modifier = Modifier
+                    .padding(horizontal = 4.dp)
+                    .clip(RoundedCornerShape(50))
+                    .background(backgroundColor)
+                    .clickable { onCategorySelected(category) }
+                    .padding(horizontal = 16.dp, vertical = 8.dp),
+                contentAlignment = Alignment.Center
+            ){
+                Text(text = category, color = textColor, fontFamily = Karla, fontWeight = FontWeight.SemiBold)
+            }
         }
     }
 }
