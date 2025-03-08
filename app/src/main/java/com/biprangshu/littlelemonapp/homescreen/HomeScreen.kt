@@ -113,7 +113,7 @@ fun homeScreen(modifier: Modifier = Modifier, viewModel: MainViewModel = hiltVie
 
 @Composable
 fun dynamicHeader(navController: NavController, scrolledUp: Boolean, onSearch: (String)-> Unit) {
-    val headerHeightExpanded=150.dp
+    val headerHeightExpanded=155.dp
     val headerHeightCollapsed=56.dp
 
     val headerHeight by animateDpAsState(
