@@ -201,7 +201,11 @@ fun ExpandedHeaderContent(navController: NavController, onSearch: (String) -> Un
                 Text("Hello User!")
                 Text("Welcome to Little Lemon!")
             }
-            IconButton({}) {
+            IconButton(onClick = {
+                navController.navigate("reservetable"){
+                    launchSingleTop=true
+                }
+            }) {
                 Image(painter = painterResource(R.drawable.reserve_table), contentDescription = "Reserve table", modifier = Modifier
                     .height(100.dp)
                     .width(100.dp), colorFilter = iconTint )
