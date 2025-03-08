@@ -112,7 +112,7 @@ fun homeScreen(modifier: Modifier = Modifier, viewModel: MainViewModel = hiltVie
             }
 
             Row(
-                modifier= Modifier.fillMaxWidth().padding(vertical = 8.dp)
+                modifier= Modifier.fillMaxWidth().padding(bottom = 10.dp)
             ) {
                 sortButtons(categories = menuCategory, selectedCategory = selectedCategory) {
                         category->
@@ -127,7 +127,6 @@ fun homeScreen(modifier: Modifier = Modifier, viewModel: MainViewModel = hiltVie
                 items(menuItems){
                     menuItem->
                     ItemCard(menu = menuItem)
-
                 }
             }
         }
