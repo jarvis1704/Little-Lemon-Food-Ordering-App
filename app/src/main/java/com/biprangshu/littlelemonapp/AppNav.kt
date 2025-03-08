@@ -10,6 +10,7 @@ import androidx.navigation.compose.composable
 import com.biprangshu.littlelemonapp.homescreen.homeScreen
 import com.biprangshu.littlelemonapp.onboarding.onBoardingForm
 import com.biprangshu.littlelemonapp.onboarding.onBoardingScreen
+import com.biprangshu.littlelemonapp.reservetable.reserveTable
 import com.biprangshu.littlelemonapp.viewmodel.MainViewModel
 
 @Composable
@@ -33,6 +34,9 @@ fun AppNav(modifier: Modifier = Modifier, navController: NavHostController) {
             route = "homescreen"
         ){
             homeScreen(navController = navController)
+        }
+        composable(route = "reservetable"){
+            reserveTable()
         }
     }
 }
