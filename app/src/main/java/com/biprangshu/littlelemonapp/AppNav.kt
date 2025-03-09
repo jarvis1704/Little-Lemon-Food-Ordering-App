@@ -41,7 +41,7 @@ fun AppNav(modifier: Modifier = Modifier, navController: NavHostController, star
             reserveTable(navController= navController)
         }
         composable(route= "confirmscreen"){
-            confirmScreen(navController = navController)
+            confirmScreen(navController = navController, sharedPreferences = sharedPref)
         }
     }
 }
