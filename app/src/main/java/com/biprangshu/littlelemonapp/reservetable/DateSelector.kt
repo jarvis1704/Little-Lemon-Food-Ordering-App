@@ -26,7 +26,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -37,6 +36,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.biprangshu.littlelemonapp.ui.theme.LittleLemonYellow
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.YearMonth
@@ -78,7 +78,7 @@ fun dateYearSelector(
                         Icon(
                             imageVector = Icons.Default.KeyboardArrowLeft,
                             contentDescription = "Previous Month",
-                            tint = Color(0xFFEB4335)
+                            tint = LittleLemonYellow
                         )
                     }
                     Text(
@@ -90,7 +90,7 @@ fun dateYearSelector(
                         Icon(
                             imageVector = Icons.Default.KeyboardArrowRight,
                             contentDescription = "Next Month",
-                            tint = Color(0xFFEB4335)
+                            tint = LittleLemonYellow
                         )
                     }
                 }
@@ -100,7 +100,7 @@ fun dateYearSelector(
                         Icon(
                             imageVector = Icons.Default.KeyboardArrowLeft,
                             contentDescription = "Previous Year",
-                            tint = Color(0xFFEB4335)
+                            tint = LittleLemonYellow
                         )
                     }
                     Text(
@@ -112,7 +112,7 @@ fun dateYearSelector(
                         Icon(
                             imageVector = Icons.Default.KeyboardArrowRight,
                             contentDescription = "Next Year",
-                            tint = Color(0xFFEB4335)
+                            tint = LittleLemonYellow
                         )
                     }
                 }
@@ -158,7 +158,7 @@ fun dateYearSelector(
                             .clip(CircleShape)
                             .background(
                                 when {
-                                    isSelected -> Color(0xFFEB4335)
+                                    isSelected -> LittleLemonYellow
                                     else -> Color.Transparent
                                 }
                             )
@@ -171,8 +171,8 @@ fun dateYearSelector(
                             text = currentDate.dayOfMonth.toString(),
                             style = MaterialTheme.typography.bodyMedium,
                             color = when {
-                                isSelected -> Color.White
-                                isCurrentMonth -> Color.Black
+                                isSelected -> Color.Black
+                                isCurrentMonth -> Color.White
                                 else -> Color.LightGray
                             }
                         )

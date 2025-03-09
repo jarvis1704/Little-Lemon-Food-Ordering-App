@@ -43,6 +43,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.biprangshu.littlelemonapp.R
+import com.biprangshu.littlelemonapp.ui.theme.Karla
 import com.biprangshu.littlelemonapp.ui.theme.LittleLemonGreen
 import com.biprangshu.littlelemonapp.ui.theme.LittleLemonYellow
 import com.biprangshu.littlelemonapp.ui.theme.MarkaziText
@@ -67,13 +68,13 @@ fun reserveTable(modifier: Modifier = Modifier, navController: NavController) {
                 Image(painter = painterResource(R.drawable.reserve_table_image), contentDescription = "Reserve table image", modifier = Modifier.fillMaxWidth().aspectRatio(16f / 9f), contentScale = ContentScale.Crop)
             }
             Column(
-                modifier = Modifier.fillMaxSize().navigationBarsPadding(),
+                modifier = Modifier.fillMaxSize().navigationBarsPadding().padding(16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
 
             ) {
-                Text("Reserve a Table")
-                Text("Please Enter details for reserving your table at little Lemon", textAlign = TextAlign.Center)
+                Text("Reserve a Table", fontFamily = MarkaziText, fontSize = 44.sp, color = LittleLemonYellow, fontWeight = FontWeight.Bold)
+                Text("Please Enter details for reserving your table at little Lemon", textAlign = TextAlign.Center, fontFamily = Karla, fontWeight = FontWeight.Medium, fontSize = 18.sp)
                 Spacer(Modifier.height(8.dp))
 
                 Column (
@@ -81,14 +82,14 @@ fun reserveTable(modifier: Modifier = Modifier, navController: NavController) {
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center
                 ){
-                    Text("Date of your Reservation")
+                    Text("Date of your Reservation", fontFamily = MarkaziText, fontWeight = FontWeight.Medium, fontSize = 24.sp)
                     dateYearSelector(
                         dateToBeUpdated = date,
                         onDateChanged = {newDate-> date=newDate},
                         selectedDate = date
                     )
                     Spacer(Modifier.height(8.dp))
-                    Text("Number of persons")
+                    Text("Number of persons", fontFamily = MarkaziText, fontWeight = FontWeight.Medium, fontSize = 24.sp)
                     Spacer(Modifier.height(8.dp))
                     var numberOfPersons by remember { mutableStateOf("") }
                     OutlinedTextField(
@@ -108,7 +109,6 @@ fun reserveTable(modifier: Modifier = Modifier, navController: NavController) {
                             RoundedCornerShape(16.dp)
                         },
                     )
-                    Spacer(Modifier.height(8.dp))
                     Button(
                         onClick = {
                             navController.navigate("confirmscreen")
@@ -118,7 +118,7 @@ fun reserveTable(modifier: Modifier = Modifier, navController: NavController) {
                         elevation = ButtonDefaults.elevatedButtonElevation(defaultElevation = 16.dp, pressedElevation = 0.dp),
                         colors = ButtonDefaults.buttonColors(contentColor = Color.Black, containerColor = LittleLemonYellow)
                     ) {
-                        Text("Get Started", fontFamily = MarkaziText, fontSize = 28.sp, fontWeight = FontWeight.SemiBold)
+                        Text("Reserve your Table", fontFamily = MarkaziText, fontSize = 28.sp, fontWeight = FontWeight.SemiBold)
                     }
                 }
             }
