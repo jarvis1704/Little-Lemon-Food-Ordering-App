@@ -50,6 +50,7 @@ fun confirmScreen(modifier: Modifier = Modifier, navController: NavController, s
             Spacer(Modifier.height(8.dp))
             Button(
                 onClick = {
+                    navController.popBackStack()
                     navController.navigate("homescreen")
                 },
                 modifier = Modifier.padding(top = 100.dp).width(250.dp),

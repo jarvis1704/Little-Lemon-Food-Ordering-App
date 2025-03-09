@@ -111,6 +111,7 @@ fun reserveTable(modifier: Modifier = Modifier, navController: NavController) {
                     )
                     Button(
                         onClick = {
+                            navController.popBackStack()
                             navController.navigate("confirmscreen")
                         },
                         modifier = Modifier.padding(top = 100.dp).width(250.dp),
