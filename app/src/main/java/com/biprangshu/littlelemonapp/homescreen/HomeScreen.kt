@@ -277,9 +277,10 @@ fun ItemCard(modifier: Modifier=Modifier, menu: Menu) {
                 contentDescription = menu.title,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(200.dp),
+                    .height(200.dp).clip(RoundedCornerShape(24.dp)),
                 onLoading = { isLoading = true },
-                onSuccess = { isLoading = false }
+                onSuccess = { isLoading = false },
+                contentScale = ContentScale.Crop
             )
 //            if (isLoading) {
 //                CircularProgressIndicator(
@@ -288,9 +289,9 @@ fun ItemCard(modifier: Modifier=Modifier, menu: Menu) {
 //                )
 //            }
             Spacer(Modifier.height(8.dp))
-            Text(text = menu.title, style = MaterialTheme.typography.titleMedium)
-            Text(text = menu.description, style = MaterialTheme.typography.bodyMedium)
-            Text(text = "Price: ${menu.price}", style = MaterialTheme.typography.bodySmall)
+            Text(text = menu.title, fontFamily = MarkaziText, fontSize = 28.sp, fontWeight = FontWeight.SemiBold, color = LittleLemonYellow)
+            Text(text = menu.description, fontFamily = Karla, fontSize = 16.sp, fontWeight = FontWeight.Medium)
+            Text(text = "Price: $${menu.price}", fontFamily = MarkaziText, fontWeight = FontWeight.Bold, fontSize = 24.sp,)
         }
     }
 }
