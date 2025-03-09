@@ -57,6 +57,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
@@ -65,6 +66,8 @@ import com.biprangshu.littlelemonapp.R
 import com.biprangshu.littlelemonapp.data.remote.Menu
 import com.biprangshu.littlelemonapp.ui.theme.Karla
 import com.biprangshu.littlelemonapp.ui.theme.LittleLemonGreen
+import com.biprangshu.littlelemonapp.ui.theme.LittleLemonYellow
+import com.biprangshu.littlelemonapp.ui.theme.MarkaziText
 import com.biprangshu.littlelemonapp.util.menuCategory
 import com.biprangshu.littlelemonapp.viewmodel.MainViewModel
 
@@ -137,7 +140,7 @@ fun homeScreen(modifier: Modifier = Modifier, viewModel: MainViewModel = hiltVie
 
 @Composable
 fun dynamicHeader(navController: NavController, scrolledUp: Boolean, onSearch: (String)-> Unit, sharedPreferences: SharedPreferences) {
-    val headerHeightExpanded=160.dp
+    val headerHeightExpanded=180.dp
     val headerHeightCollapsed=56.dp
 
     val headerHeight by animateDpAsState(
@@ -201,8 +204,8 @@ fun ExpandedHeaderContent(navController: NavController, onSearch: (String) -> Un
             modifier = Modifier.fillMaxWidth()
         ) {
             Column {
-                Text("Hello $userName")
-                Text("Welcome to Little Lemon!")
+                Text("Hello, $userName", fontFamily = MarkaziText, fontSize = 42.sp, fontWeight = FontWeight.SemiBold)
+                Text("Welcome to Little Lemon!", fontFamily = Karla, fontWeight = FontWeight.Normal, fontSize = 20.sp, color = LittleLemonYellow)
             }
             IconButton(onClick = {
                 navController.navigate("reservetable"){
