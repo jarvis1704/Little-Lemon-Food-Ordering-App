@@ -18,9 +18,9 @@ import com.biprangshu.littlelemonapp.viewmodel.MainViewModel
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun AppNav(modifier: Modifier = Modifier, navController: NavHostController) {
+fun AppNav(modifier: Modifier = Modifier, navController: NavHostController, startDestination: String) {
     NavHost(
-        navController = navController, startDestination = "onboardingscreen"
+        navController = navController, startDestination = startDestination
     ) {
         composable(
             route = "onboardingscreen"
