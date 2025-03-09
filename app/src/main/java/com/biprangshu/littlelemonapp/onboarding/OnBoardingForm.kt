@@ -1,5 +1,6 @@
 package com.biprangshu.littlelemonapp.onboarding
 
+import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -30,6 +31,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -55,6 +57,8 @@ fun onBoardingForm(modifier: Modifier = Modifier, navController: NavController) 
     var emailText by remember {
         mutableStateOf("")
     }
+
+    val context= LocalContext.current
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
@@ -166,7 +170,16 @@ fun onBoardingForm(modifier: Modifier = Modifier, navController: NavController) 
             ) {
                 Button(
                     onClick = {
-                        navController.navigate("homescreen")
+                        context.getSharedPreferences("app_preferences", Context.MODE_PRIVATE).edit().apply{
+                            putString("first_name", firsttext)
+                            putString("last_name", lastText)
+                            putString("email", emailText)
+                            putBoolean("isFirstTime", false)
+                            apply()
+                        }
+                        navController.navigate("homescreen"){
+                            popUpTo("onboardingscreen"){inclusive=true}
+                        }
                     },
                     modifier = Modifier.padding(top = 100.dp).width(250.dp),
                     shape = RoundedCornerShape(16.dp),
