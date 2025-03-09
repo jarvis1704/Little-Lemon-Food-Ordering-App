@@ -1,5 +1,7 @@
 package com.biprangshu.littlelemonapp.homescreen
 
+import android.content.Context
+import android.content.SharedPreferences
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
@@ -67,7 +69,7 @@ import com.biprangshu.littlelemonapp.util.menuCategory
 import com.biprangshu.littlelemonapp.viewmodel.MainViewModel
 
 @Composable
-fun homeScreen(modifier: Modifier = Modifier, viewModel: MainViewModel = hiltViewModel(), navController: NavController) {
+fun homeScreen(modifier: Modifier = Modifier, viewModel: MainViewModel = hiltViewModel(), navController: NavController, sharedPreferences: SharedPreferences) {
 
 
     val isLoading by viewModel.isLoading.collectAsState() // Collect isLoading StateFlow
@@ -83,7 +85,6 @@ fun homeScreen(modifier: Modifier = Modifier, viewModel: MainViewModel = hiltVie
         mutableStateOf("All")
     }
 
-
     Surface(
         color = MaterialTheme.colorScheme.background,
         modifier = Modifier.fillMaxSize()
@@ -97,7 +98,7 @@ fun homeScreen(modifier: Modifier = Modifier, viewModel: MainViewModel = hiltVie
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
-            dynamicHeader(navController = navController, scrolledUp = scrolledUp) { }
+            dynamicHeader(navController = navController, scrolledUp = scrolledUp, sharedPreferences = sharedPreferences, onSearch = {})
 
             if(isLoading){
                 CircularProgressIndicator(modifier = Modifier.padding(16.dp))
@@ -135,7 +136,7 @@ fun homeScreen(modifier: Modifier = Modifier, viewModel: MainViewModel = hiltVie
 
 
 @Composable
-fun dynamicHeader(navController: NavController, scrolledUp: Boolean, onSearch: (String)-> Unit) {
+fun dynamicHeader(navController: NavController, scrolledUp: Boolean, onSearch: (String)-> Unit, sharedPreferences: SharedPreferences) {
     val headerHeightExpanded=160.dp
     val headerHeightCollapsed=56.dp
 
@@ -155,7 +156,7 @@ fun dynamicHeader(navController: NavController, scrolledUp: Boolean, onSearch: (
             enter = fadeIn(),
             exit = fadeOut()
         ) {
-            ExpandedHeaderContent(navController = navController, onSearch = onSearch)
+            ExpandedHeaderContent(navController = navController, onSearch = onSearch, sharedPreferences = sharedPreferences)
         }
         AnimatedVisibility(
             visible = !scrolledUp,
@@ -180,13 +181,15 @@ fun CollapsedHeaderContent() {
 }
 
 @Composable
-fun ExpandedHeaderContent(navController: NavController, onSearch: (String) -> Unit) {
+fun ExpandedHeaderContent(navController: NavController, onSearch: (String) -> Unit, sharedPreferences: SharedPreferences) {
 
     val iconTint= if(isSystemInDarkTheme()){
         ColorFilter.tint(Color.White)
     } else {
         ColorFilter.tint(Color.Black)
     }
+
+    val userName=sharedPreferences.getString("first_name", "user")
 
     Column(
         modifier = Modifier
@@ -198,7 +201,7 @@ fun ExpandedHeaderContent(navController: NavController, onSearch: (String) -> Un
             modifier = Modifier.fillMaxWidth()
         ) {
             Column {
-                Text("Hello User!")
+                Text("Hello $userName")
                 Text("Welcome to Little Lemon!")
             }
             IconButton(onClick = {

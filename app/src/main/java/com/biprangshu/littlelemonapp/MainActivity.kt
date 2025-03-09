@@ -32,7 +32,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             LittleLemonAppTheme {
                 val navController= rememberNavController()
-                AppNav(navController = navController, startDestination = startDestination)
+                AppNav(navController = navController, startDestination = startDestination, sharedPref = sharedPref)
             }
         }
     }
